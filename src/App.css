@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.main-container{
+  background: rgb(7, 214, 138);
+  height: 100vh;
+  padding: 20px 0;
+  
+}
+.center-item{
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    background-repeat: repeat-y;
+    height: 100%;
+  }
+}
+
