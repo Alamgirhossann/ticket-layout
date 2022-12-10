@@ -37,21 +37,16 @@
   }
 }
 
-.main-container{
-  background: rgb(7, 214, 138);
-  height: 100vh;
-  padding: 20px 0;
+ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: white;
+}
+ul li a:hover{
+  cursor: pointer;
   
 }
-.center-item{
-  display: flex;
-  justify-content: center;
-}
 
-@media (max-width: 768px) {
-  .main-container {
-    background-repeat: repeat-y;
-    height: 100%;
-  }
-}
+
 

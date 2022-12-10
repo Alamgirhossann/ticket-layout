@@ -1,0 +1,18 @@
+
+.signin-signup-section{
+    padding: 9rem 0 5rem 0;
+    /* background: rgb(7, 214, 138); */
+    height: 100vh;
+    color:white;
+}
+.form-control-section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.form-control-section form{
+    width: 37rem;
+    padding: .5rem;
+    border: 2px solid white;
+    background: #060b26;
+}

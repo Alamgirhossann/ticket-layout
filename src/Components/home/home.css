@@ -1,0 +1,190 @@
+.student-list {
+    background: white;
+    padding: 0px 10px 0 5px;
+    color: #060b26;
+}
+
+.student-home-container {
+    margin-top: 70px;
+    border: 1px solid #060b26;
+    width: 100%
+}
+
+.child-container {
+    width: 100%;
+}
+
+.add {
+    background: #060b26;
+    margin: 0 0 10px 0px;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+.edit {
+    background: #060b26;
+    margin: 0 0 7px 0px;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+.delete {
+    background: rgb(242, 28, 81);
+    margin: 0 0 7px 15px;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+.flex-top {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.input-box {
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    
+}
+
+.table-container {
+    margin: 25px 8px 0px 8px;
+}
+
+.table {
+    font-size: 15px;
+}
+
+.icons {
+    margin: 0 10px 0px 0px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 20px;
+    background: none;
+}
+.close{
+    border-bottom: 1px solid black;
+    margin: 0 10px 0px 0px;
+    outline: none;
+    cursor: pointer;
+    font-size: 20px;
+    background: none;
+}
+
+.items-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px
+}
+.icons-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px
+}
+
+.main-body {
+    width: 100%;
+    padding: 20px 10px 0 15%;
+
+}
+.select-div{
+    /* background: red; */
+    display: flex;
+}
+.select-item{
+    width: 50%;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    background: none;
+}
+@media (max-width:1300px) {
+    .main-body {
+        padding: 10px;
+        padding: 20px 10px 0 17%;
+    }
+}
+@media (max-width:1150px) {
+    .main-body {
+        padding: 10px;
+        padding: 20px 10px 0 19%;
+    }
+}
+
+@media (max-width:990px) {
+    .main-body {
+        padding: 10px;
+        padding: 20px 10px 0 21%;
+    }
+    .student-home-container {
+        width: 100%;
+        overflow-x: scroll;
+        margin-top: 80px;
+    }
+    .child-container {
+        width: 900px;
+    }
+}
+
+@media (max-width:850px) {
+    .main-body {
+        padding: 10px;
+        padding: 20px 10px 0 23%;
+    }
+}
+
+@media (max-width:768px) {
+    .main-body {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    .input-box {
+        margin-right: 0px;
+        margin-bottom: 5px;
+    }
+
+    .table-container {
+        margin: 3px;
+    }
+
+    
+
+    .student-list {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .flex-top {
+        display: block;
+        text-align: center;
+    }
+
+    .table {
+        font-size: 11.5px;
+    }
+
+    .add {
+        margin: 5px 5px 0px 5px;
+        text-align: center;
+    }
+
+    .edit {
+        margin: 5px 0;
+    }
+
+    .delete {
+        margin: 5px 0;
+    }
+
+    
+
+}

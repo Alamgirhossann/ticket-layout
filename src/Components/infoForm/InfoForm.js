@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import "../App.css";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
+import "./style.css";
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
-import user from "../images/user.png";
-import { db, storage } from "../App";
+import user from "../../images/user.png";
+import { db, storage } from "../../App";
 import {
   getDownloadURL,
   ref,
@@ -19,8 +19,6 @@ function InfoForm() {
   const [base, setBase] = useState(null);
   let navigate = useNavigate();
   const { id } = useParams();
-
-  console.log(typeof base, base);
 
   const [data, setData] = useState({
     account: "",
@@ -41,7 +39,7 @@ function InfoForm() {
     pAddress: "",
     contact: "",
   });
-  console.log(id, data.image, file);
+  console.log("id===", id, "image===", data.image, base, data);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -94,7 +92,6 @@ function InfoForm() {
     };
   };
 
-
   useEffect(() => {
     const uploadFile = () => {
       const storageRef = ref(storage, "image");
@@ -102,77 +99,76 @@ function InfoForm() {
 
       uploadString(storageRef, message2, "data_url").then((snapshot) => {
         console.log("Uploaded a base64 string!");
-        setData((prev) => ({ ...prev, image: base}));
+        setData((prev) => ({ ...prev, image: base }));
       });
 
-  //     getDownloadURL(storageRef)
-  // .then((url) => {
-  //   imageToBase64(url)
-  //   setData((prev) => ({ ...prev, image: base}));
-  //   // Insert url into an <img> tag to "download"
-  // })
-  // .catch((error) => {
-  //   // A full list of error codes is available at
-  //   // https://firebase.google.com/docs/storage/web/handle-errors
-  //   switch (error.code) {
-  //     case 'storage/object-not-found':
-  //       // File doesn't exist
-  //       break;
-  //     case 'storage/unauthorized':
-  //       // User doesn't have permission to access the object
-  //       break;
-  //     case 'storage/canceled':
-  //       // User canceled the upload
-  //       break;
+      //     getDownloadURL(storageRef)
+      // .then((url) => {
+      //   imageToBase64(url)
+      //   setData((prev) => ({ ...prev, image: base}));
+      //   // Insert url into an <img> tag to "download"
+      // })
+      // .catch((error) => {
+      //   // A full list of error codes is available at
+      //   // https://firebase.google.com/docs/storage/web/handle-errors
+      //   switch (error.code) {
+      //     case 'storage/object-not-found':
+      //       // File doesn't exist
+      //       break;
+      //     case 'storage/unauthorized':
+      //       // User doesn't have permission to access the object
+      //       break;
+      //     case 'storage/canceled':
+      //       // User canceled the upload
+      //       break;
 
-  //     // ...
+      //     // ...
 
-  //     case 'storage/unknown':
-  //       // Unknown error occurred, inspect the server response
-  //       break;
-  //   }
-  // });
+      //     case 'storage/unknown':
+      //       // Unknown error occurred, inspect the server response
+      //       break;
+      //   }
+      // });
 
-     
-  // const storageRef = ref(storage, "image");
-  //     const name = new Date().getTime() + file.name;
+      // const storageRef = ref(storage, "image");
+      //     const name = new Date().getTime() + file.name;
 
-  //     const uploadTask = uploadBytesResumable(storageRef, file);
+      //     const uploadTask = uploadBytesResumable(storageRef, file);
 
-  //     uploadTask.on(
-  //       "state_changed",
-  //       (snapshot) => {
-  //         const progress =
-  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //         setProgress(progress);
-  //         switch (snapshot.state) {
-  //           case "paused":
-  //             console.log("Upload is Paused");
-  //             break;
-  //           case "running":
-  //             console.log("Upload is running");
-  //             break;
-  //           default:
-  //             break;
-  //         }
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       },
-  //       () => {
-  //         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-  //           console.log(downloadUrl, typeof(downloadUrl))
-  //           imageUrlToBase64(downloadUrl)
-  //           setData((prev) => ({ ...prev, image: base}));
-  //         });
-  //       }
-  //     );
+      //     uploadTask.on(
+      //       "state_changed",
+      //       (snapshot) => {
+      //         const progress =
+      //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      //         setProgress(progress);
+      //         switch (snapshot.state) {
+      //           case "paused":
+      //             console.log("Upload is Paused");
+      //             break;
+      //           case "running":
+      //             console.log("Upload is running");
+      //             break;
+      //           default:
+      //             break;
+      //         }
+      //       },
+      //       (error) => {
+      //         console.log(error);
+      //       },
+      //       () => {
+      //         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+      //           console.log(downloadUrl, typeof(downloadUrl))
+      //           imageUrlToBase64(downloadUrl)
+      //           setData((prev) => ({ ...prev, image: base}));
+      //         });
+      //       }
+      //     );
     };
     base && uploadFile();
   }, [base]);
 
   useEffect(() => {
-    id && getSingelStudent();
+    id && singelStuden();
   }, [id]);
 
   const getSingelStudent = async () => {
@@ -181,6 +177,39 @@ function InfoForm() {
     if ((await snapshot).exists()) {
       setData({ ...snapshot.data() });
     }
+  };
+
+  const singelStuden=() => {
+    fetch(
+      `https://native-note-app-c6215-default-rtdb.firebaseio.com/student/${id}.json`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        console.log("Results", typeof data, data);
+      });
+  }
+
+  const update = () => {
+    fetch(
+      `https://native-note-app-c6215-default-rtdb.firebaseio.com/student/${id}.json`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          ...data,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        if (json) {
+          alert('data update successfull')
+          navigate('/home')
+        }
+      });
   };
 
   const updateStudent = async () => {
@@ -209,26 +238,66 @@ function InfoForm() {
     }
   };
 
+  const postData = () => {
+    fetch(
+      "https://native-note-app-c6215-default-rtdb.firebaseio.com/student.json",
+      {
+        method: "POST",
+        body: JSON.stringify({ ...data }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        if (json) {
+          alert('data create successfull')
+          navigate('/home')
+        }
+      });
+  };
+
+  const imageDiv = () => {
+    if (base) {
+      return (
+        <img style={{ height: "150px", width: "150px" }} src={base} alt="" />
+      );
+    } else if (id) {
+      return (
+        <img
+          style={{ height: "150px", width: "150px" }}
+          src={data.image}
+          alt=""
+        />
+      );
+    } else {
+      return (
+        <img style={{ height: "150px", width: "150px" }} src={user} alt="" />
+      );
+    }
+  };
+
   return (
     <div className="main-container">
       <div className="container-fluid">
         <div className="text-center mb-4">
           {id ? (
-            <h1 className="text-white ">Update your Information</h1>
+            <h1 className=" ">Update your Information</h1>
           ) : (
-            <h1 className="text-white ">Enter your Full Information</h1>
+            <h1 className=" ">Enter your Full Information</h1>
           )}
         </div>
         <div className="row ">
           <div className="col-md-5 text-center">
             <div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Student A/c
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -241,12 +310,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Student Name
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -259,12 +328,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Roll Number
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -277,12 +346,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Registration No
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -295,12 +364,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Academic Year/Batch
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -313,12 +382,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Mobile No
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -331,12 +400,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Class
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <select
                     style={{ width: "70%" }}
                     aria-label="Default select example"
@@ -361,12 +430,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Address
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -379,12 +448,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Gender
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <select
                     style={{ width: "70%" }}
                     aria-label="Default select example"
@@ -404,15 +473,21 @@ function InfoForm() {
           </div>
           <div className="col-md-2 d-flex justify-content-center">
             <div className="text-center">
-              <img className="mb-2 img-fluid" src={id ? data.image : user } alt="" />
+              {imageDiv()}
+
               <label
-                style={{ background: "white", width: "100%", color: "#000" }}
+                style={{
+                  background: "black",
+                  width: "100%",
+                  color: "#fff",
+                  marginTop: "10px",
+                }}
                 htmlFor="img"
               >
                 Browse
               </label>
               {
-                base !== null ? <p style={{width:"400px"}}>Your Photo url {base}</p> : ""
+                // base !== null ? <p style={{width:"100%"}}>Your Photo url {base}</p> : ""
               }
 
               <input
@@ -427,12 +502,12 @@ function InfoForm() {
           <div className="col-md-5 text-center">
             <div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Father Name
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -445,12 +520,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Mother Name
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -463,12 +538,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Admission Date
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -481,12 +556,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Date of Birth
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -499,12 +574,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Ref.Name
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -517,12 +592,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Ref. Relation
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -535,12 +610,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Permanent Address
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -553,12 +628,12 @@ function InfoForm() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5 text-end">
-                  <label className="text-white " htmlFor="">
+                <div className="col-md-5 align-end">
+                  <label className=" " htmlFor="">
                     Emergency Contact
                   </label>
                 </div>
-                <div className="col-md-7 text-start">
+                <div className="col-md-7 align-start">
                   <input
                     style={{ width: "70%" }}
                     className="my-1"
@@ -575,19 +650,19 @@ function InfoForm() {
         </div>
         <div className="text-center">
           {id ? (
-            <button className="mx-1 mt-5" onClick={updateStudent}>
+            <button className="mx-1 mt-5 add" onClick={update}>
               Update
             </button>
           ) : (
             <div>
               <button
-                className="mx-1 mt-5"
-                onClick={createNote}
+                className="mx-1 mt-5 add"
+                onClick={postData}
                 disabled={progress !== null && progress < 100}
               >
                 Save
               </button>
-              <button className="mx-1 mt-5">Cancel</button>
+              <button className="mx-1 mt-5 delete">Cancel</button>
             </div>
           )}
         </div>
